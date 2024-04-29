@@ -70,6 +70,22 @@ class productController {
         });
         return res.json(product);
     }
+
+    async deleteOne(req, res) {
+        const { id } = req.params;
+        try {
+            const product = await Product.findByPk(id);
+            if (!product) {
+                return res.status(404).json({ message: 'Product not found' });
+            }
+            await product.destroy();
+            await ProductInfo.destroy({ where: { productId: id } });
+            return res.json({ message: 'Product deleted successfully' });
+        } catch (err) {
+            console.error(err);
+            return res.status(500).json({ message: 'Error deleting product' });
+        }
+    }
 }
 
 module.exports = new productController();
