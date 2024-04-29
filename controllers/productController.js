@@ -21,6 +21,10 @@ class productController {
                 });
             });
 
+            if (count === undefined || count === null) {
+                return next(ApiError.badRequest('Количество товара не указано'));
+            }
+
             const product = await Product.create({name, price, typeId, count, img: fileName});
 
             if (info) {
