@@ -6,7 +6,7 @@ const path = require('path');
 class productController {
     async create(req, res, next) {
         try {
-            let {name, price, typeId, info} = req.body;
+            let {name, price, typeId, info, count} = req.body;
             if (!req.files || !req.files.img) {
                 return next(ApiError.badRequest('Изображение не загружено'));
             }
@@ -21,7 +21,7 @@ class productController {
                 });
             });
 
-            const product = await Product.create({name, price, typeId, img: fileName});
+            const product = await Product.create({name, price, typeId, count, img: fileName});
 
             if (info) {
                 try {

@@ -13,7 +13,8 @@ module.exports = function(req, res, next) {
         if (!token) {
             return res.status(401).json({message: "Токен не найден"});
         }
-        const decoded = jwt.verify(token, process.env.SECRET_KEY);
+        let decoded;
+        decoded = jwt.verify(token, process.env.SECRET_KEY);
         req.user = decoded;
         next();
     } catch (error) {
