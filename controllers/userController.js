@@ -56,7 +56,7 @@ class userController {
     async check(req, res, next) {
         try {
             const token = generateJWT(req.user.id, req.user.email, req.user.role);
-            return res.json({token});
+            return res.json({ token, role: req.user.role });
         } catch (error) {
             return next(ApiError.internal('Ошибка при проверке токена: ' + error.message));
         }
